@@ -4,7 +4,7 @@ Created on Fri Jul  6 13:19:50 2018
 
 @author: hyeOn
 """
-
+ 
 def moiveReview(moive_name, maxPage=10) :
     import urllib
 
