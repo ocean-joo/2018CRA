@@ -52,6 +52,8 @@ def moiveReview(moive_name, maxPage=10) :
         for i in text_list :
             temp = i.text
             temp = temp.rstrip()
+            if temp.startswith("관람객") :
+                temp = temp.split('관람객')[1]
             result.append(temp)
     
     
