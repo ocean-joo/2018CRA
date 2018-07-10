@@ -48,6 +48,7 @@ def movieReview(movie_name, maxPage=10) :
         html = requests.get(inputStr).text
         soup = BeautifulSoup(html, 'html.parser')
         
+<<<<<<< HEAD
         text_list = (soup.select('body > div > div > div.score_result > ul div.score_reple > p'),
 				soup.select("body > div > div > div.score_result > ul div.star_score > em"))
         for i, k in text_list :
@@ -56,6 +57,15 @@ def movieReview(movie_name, maxPage=10) :
             if temp[0].startwith("관람객") :
                 temp[0] = temp[0].split("관람객")[0]
             temp[1] = k.text
+=======
+        text_list = soup.select('body > div > div > div.score_result > ul div.score_reple > p')
+        
+        for i in text_list :
+            temp = i.text
+            temp = temp.rstrip()
+            if temp.startswith("관람객") :
+                temp = temp.split('관람객')[1]
+>>>>>>> 49b01a4572e11431a58105debf874c9502eb9237
             result.append(temp)
     
     return result
