@@ -1,24 +1,18 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Fri Jul  6 13:19:50 2018
 
-@author: hyeOn
-"""
- 
-def movieReview(movie_name, maxPage=10) :
+def crawlReview(movie_name, maxPage=10) :
+        
+    import urllib.request, urllib.parse
     
-    import urllib 
-
-    client_ID = 'iPiLUtbmWB3Ml5f8Ay3A'
-    client_secret = 'WH0MRvrfmm'
+    client_ID = "iPiLUtbmWB3Ml5f8Ay3A"
+    client_secret = "WH0MRvrfmm"
     encoded_movie_name = urllib.parse.quote(movie_name)
     
-    query = "https://openapi.naver.com/v1/search/movie.json"
-    option = "?display=1&yearfrom=2000&yearto=2018&query="
+    api_url = "https://openapi.naver.com/v1/search/movie.json"
+    api_option = "?display=1&yearfrom=2000&yearto=2018&query="
+    api = api_url + api_option + encoded_movie_name
     
-    url_query = query + option + encoded_movie_name
-    
-    request = urllib.request.Request(url_query)
+    request = urllib.request.Request(api)
     request.add_header("X-Naver-Client-Id",client_ID)
     request.add_header("X-Naver-Client-Secret",client_secret)
     
@@ -27,49 +21,43 @@ def movieReview(movie_name, maxPage=10) :
     
     if rescode != 200 :
         print("Error Code : " + str(rescode))
-    
+    	
     import json
-    item = json.loads(response.read())
-    url = item['items'][0]['link']
-    #rating = item['items'][0]['userRating']
-
+    content = json.dumps(response.read())
+    url = content['items'][0]['link']
+    # rating = content['items'][0]['userRating']
+    
     str2 = url.split('code=')[1]
-
     str1 = 'https://movie.naver.com/movie/bi/mi/pointWriteFormList.nhn?code='
     str3 = '&type=after&isActualPointWriteExecute=false&isMileageSubscriptionAlready=false&isMileageSubscriptionReject=false'
-
+    # to change order, add option //order=sympathyScore// or newest or highest or lowest
+    
     import requests
     from bs4 import BeautifulSoup
-
-    result = tuple()
-
-    for j in range(1,maxPage+1) :
-        inputStr = str1 + str2 + str3 + '&page=' + str(j)
-        html = requests.get(inputStr).text
+      
+    text_result = []
+    rating_result = []
+    
+    for i in range(1, maxPage+1) :
+        inputStr = str1 + str2 + str3 + '&page=' + str(i)
+        html = requests.get(inpurStr).test
         soup = BeautifulSoup(html, 'html.parser')
-        
-<<<<<<< HEAD
-        text_list = (soup.select('body > div > div > div.score_result > ul div.score_reple > p'),
-				soup.select("body > div > div > div.score_result > ul div.star_score > em"))
-        for i, k in text_list :
-            temp[0] = i.text
-            temp[0] = temp[0].rstrip()
-            if temp[0].startwith("관람객") :
-                temp[0] = temp[0].split("관람객")[0]
-            temp[1] = k.text
-=======
+    
         text_list = soup.select('body > div > div > div.score_result > ul div.score_reple > p')
-        
-        for i in text_list :
-            temp = i.text
+
+        for j in text_list :
+            temp = j.text
             temp = temp.rstrip()
             if temp.startswith("관람객") :
-                temp = temp.split('관람객')[1]
->>>>>>> 49b01a4572e11431a58105debf874c9502eb9237
-            result.append(temp)
-    
-    return result
+                temp = temp.split("관람객")[1]
+            text_result.append(temp)
 
-movieReview("강철비")
-movieReview("신과 함께")
-movieReview("1987")
+        rating_list = soup.select('body > div > div > div.score_result > ul div.star_score > em')
+
+        for k in rating_list :
+            temp = k.text
+            rating_list.append(temp)
+
+    result = list(zip(text_result, rating_result))
+    return result
+crawlReview('이터널 선샤인')
