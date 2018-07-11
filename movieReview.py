@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-def crawlReview(movie_name, maxPage=10) :
+def crawlReview(movie_name, maxPage=10, sort='sympathyScore') :
         
     import urllib.request, urllib.parse
     
@@ -23,13 +23,13 @@ def crawlReview(movie_name, maxPage=10) :
         print("Error Code : " + str(rescode))
     	
     import json
-    content = json.dumps(response.read())
+    content = json.loads(response.read())
     url = content['items'][0]['link']
     # rating = content['items'][0]['userRating']
     
     str2 = url.split('code=')[1]
     str1 = 'https://movie.naver.com/movie/bi/mi/pointWriteFormList.nhn?code='
-    str3 = '&type=after&isActualPointWriteExecute=false&isMileageSubscriptionAlready=false&isMileageSubscriptionReject=false'
+    str3 = '&type=after&onlyActualPointYn=N&order=' + sort
     # to change order, add option //order=sympathyScore// or newest or highest or lowest
     
     import requests
@@ -40,7 +40,7 @@ def crawlReview(movie_name, maxPage=10) :
     
     for i in range(1, maxPage+1) :
         inputStr = str1 + str2 + str3 + '&page=' + str(i)
-        html = requests.get(inpurStr).test
+        html = requests.get(inputStr).text
         soup = BeautifulSoup(html, 'html.parser')
     
         text_list = soup.select('body > div > div > div.score_result > ul div.score_reple > p')
@@ -56,7 +56,7 @@ def crawlReview(movie_name, maxPage=10) :
 
         for k in rating_list :
             temp = k.text
-            rating_list.append(temp)
+            rating_result.append(temp)
 
     result = list(zip(text_result, rating_result))
     return result
