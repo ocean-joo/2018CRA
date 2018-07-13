@@ -26,4 +26,17 @@ def get_info(Mname, open_year) :
 
     return content
 
+def get_spc_info(Mcode) :
+    api_url = "http://www.kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieInfo.json"
+    api_option = "?key=" + key + "&movieCd=" + Mcode
+	url = api_url + api_option
 
+    response = urllib.request.urlopen(url)
+
+    if response.getcode() != 200 :
+        print("Error Code : " + str(response.getcode())
+
+    import json
+    content = json.loads(response.read())
+
+    return content
