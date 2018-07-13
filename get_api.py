@@ -12,7 +12,7 @@ def get_info(Mname, open_year) :
     encoded_name = urllib.parse.quote(Mname)
 
     api_url = "http://www.kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieList.json"
-    api_option = "?key=" + key + "&movieNm=" + encoded_name + "&openStartDt=" + open_year
+    api_option = "?key=" + key + "&movieNm=" + encoded_name + "&openStartDt=" + open_year + '&openEndDt=' + open_year
     url = api_url + api_option
 
     response = urllib.request.urlopen(url)
