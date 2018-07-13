@@ -9,32 +9,32 @@ reviews -> reviewData.txt
 
 
 import movieReview as mr
-import listofMovie as lm
+import ListofMovie as lm
+import get_api as ga
 
-data = lm.get_movie.list() # length = 675
+data = lm.get_movie_list() # length = 675
 
 listF = open("/home/hyewon/2018CRA/movieList.txt", 'w')
 reviewF = open("/home/hyewon/2018CRA/reviewData.txt", 'w')
 
 for i in data :
     listF.write(' '.join(i))
-	listF.write('\n')
+    listF.write('\n')
 
 listF.close()
 
 num = 1
 for i in data :
-    sympathy = mr.crawlReview(i[0], i[1], maxPage=10)
-    lowest = mr.crawlReview(i[], i[], maxPage=7, sort="lowest")
-    msg = "%d 번째 영화 -  %s" % (num, i[0])
+    pyear = ga.get_info(i[0], i[1])['prdtYear']
+    sympathy = mr.crawlReview(i[0], pyear, maxPage=10)
+    lowest = mr.crawlReview(i[0], pyear, maxPage=7, sort="lowest")
+    msg = "%d 번째 영화 -  %s\n공감순\n" % (num, i[0])
     reviewF.write(msg)
-	for j in sympathy :
-        reviewF.write(' '.join(j))
-        reviewF.write('\n')
+    for j in sympathy :
+        reviewF.write(' '.join(j) + '\n')
     reviewF.write("\n\n낮은평점순\n")
     for k in lowest :
-        reviewF.write(' '.join(k))
-        reviewF.write("\n")
+        reviewF.write(' '.join(k) + '\n')
     reviewF.write("\n\n\n")
     num = num + 1
 
