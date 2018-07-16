@@ -5,7 +5,6 @@ project file that saves list of movies and crawls the reviews.
 list of movies -> movieList.txt
 reviews -> reviewData.txt
 
-"""
 
 
 import movieReview as mr
@@ -38,4 +37,33 @@ for i in data :
     reviewF.write("\n\n\n")
     num = num + 1
 
+reviewF.close()
+
+"""
+
+# change the file form (.txt -> .csv)
+
+
+import movieReview as mr
+import ListofMovie as lm
+import get_api as api
+import csv
+
+data = lm.get_movie_list()
+
+reviewF = open("/home/hyewon/2018CRA/CSVmovie.csv", 'w', encoding='utf-8', newline='')
+
+rf = csv.writer(reviewF)
+
+# making movie list
+rf.writerow(['Movie Name', 'Review', 'Sentiment'])
+
+for i in data :
+	pyear = api.get_info(i[0], i[1])['prdtYear']
+	sympathy = mr.crawlReview(i[0], pyear, maxPage=10)
+	lowest = mr.crawlReview(i[0], pyear, maxPage=7, sort='lowest')
+	for j in sympathy :
+		rf.writerow([i[0], j[0], j[1]])
+	for k in lowest :
+		rf.writerow([i[0], k[0], k[1]])
 reviewF.close()
