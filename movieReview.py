@@ -33,7 +33,8 @@ def crawlReview(Mname, Myear, maxPage=10, sort='sympathyScore') :
     try :
         url = content['items'][0]['link']
     except :
-        return content	
+        print("save fail %s") %Mname
+	    return -1	
     # rating = content['items'][0]['userRating']
     
     str2 = url.split('code=')[1]
