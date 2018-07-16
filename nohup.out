@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "save_list.py", line 89, in <module>
+    Rlist = mr.crawlReview(i[0], i[1], pyear, maxPage=500)
+  File "/home/hyewon/2018CRA/movieReview.py", line 54, in crawlReview
+    reviewNum = tempsoup.select('body > div > div > div.score_total > strong > em')[0].text
+IndexError: list index out of range

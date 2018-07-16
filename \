@@ -1,0 +1,13 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Tue Jul 10 19:42:37 2018
+
+@author: hyeOn
+"""
+
+import urllib.request
+
+key = 4c099619fc8751d5693b8a368b769a79
+url = "http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?"
+
+response = urllib.request.urlopen(url)

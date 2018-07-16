@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-def crawlReview(Mname, Myear, maxPage=10, sort='sympathyScore') :
+def crawlReview(Mname, Oyear, Pyear, maxPage=10, sort='sympathyScore') :
         
     import urllib.request, urllib.parse
     
@@ -9,7 +9,7 @@ def crawlReview(Mname, Myear, maxPage=10, sort='sympathyScore') :
     encoded_movie_name = urllib.parse.quote(Mname)
     
     api_url = "https://openapi.naver.com/v1/search/movie.json"
-    api_option = "?display=1&yearfrom=" + Myear + "&yearto=" + Myear + "&query="
+    api_option = "?display=1&yearfrom=" + Pyear + "&yearto=" + Oyear + "&query="
     api = api_url + api_option + encoded_movie_name
     
     request = urllib.request.Request(api)
@@ -34,7 +34,7 @@ def crawlReview(Mname, Myear, maxPage=10, sort='sympathyScore') :
         url = content['items'][0]['link']
     except :
         print("save fail %s") %Mname
-	    return -1	
+        return -1	
     # rating = content['items'][0]['userRating']
     
     str2 = url.split('code=')[1]
@@ -47,7 +47,19 @@ def crawlReview(Mname, Myear, maxPage=10, sort='sympathyScore') :
       
     text_result = []
     rating_result = []
+
+    tempstr = str1 + str2 + str3
+    temphtml = requests.get(tempstr).text
+    tempsoup = BeautifulSoup(temphtml, 'html.parser')
+    reviewNum = tempsoup.select('body > div > div > div.score_total > strong > em')[0].text
     
+    import re
+    reviewNum = re.sub(',', '', reviewNum)
+    reviewNum = (int(reviewNum)/10)-1
+	
+    if maxPage > reviewNum : #크롤링하겠다는 페이지수가 영화의 리뷰 페이지 수보다 작을 때
+        maxPage = int(reviewNum)
+
     for i in range(1, maxPage+1) :
         inputStr = str1 + str2 + str3 + '&page=' + str(i)
         html = requests.get(inputStr).text

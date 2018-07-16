@@ -39,7 +39,6 @@ for i in data :
 
 reviewF.close()
 
-"""
 
 # change the file form (.txt -> .csv)
 
@@ -67,3 +66,28 @@ for i in data :
 	for k in lowest :
 		rf.writerow([i[0], k[0], k[1]])
 reviewF.close()
+
+"""
+
+
+# crawling many review....
+
+import movieReview as mr
+import ListofMovie as lm
+import get_api as api
+import csv
+
+data = lm.get_movie_list()
+
+tempF = open("/home/hyewon/2018CRA/allReview.csv", 'w', encoding='utf-8', newline='')
+
+f = csv.writer(tempF)
+f.writerow(['Movie Name', 'Review', 'Sentiment'])
+
+for i in data :
+    pyear = api.get_info(i[0], i[1])['prdtYear']
+    Rlist = mr.crawlReview(i[0], i[1], pyear, maxPage=500)
+    for j in Rlist :
+        f.writerow([i[0], j[0], j[1]])
+
+tempF.close()
