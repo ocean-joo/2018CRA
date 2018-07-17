@@ -79,12 +79,12 @@ import csv
 
 data = lm.get_movie_list()
 
-tempF = open("/home/hyewon/2018CRA/allReview.csv", 'w', encoding='utf-8', newline='')
+tempF = open("/home/hyewon/2018CRA/allReview.csv", 'a', encoding='utf-8', newline='')
 
 f = csv.writer(tempF)
-f.writerow(['Movie Name', 'Review', 'Sentiment'])
+#f.writerow(['Movie Name', 'Review', 'Sentiment'])
 
-for i in data :
+for i in data[32] :
     pyear = api.get_info(i[0], i[1])['prdtYear']
     Rlist = mr.crawlReview(i[0], i[1], pyear, maxPage=500)
     for j in Rlist :

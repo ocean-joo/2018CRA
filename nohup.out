@@ -4,3 +4,27 @@ Traceback (most recent call last):
   File "/home/hyewon/2018CRA/movieReview.py", line 54, in crawlReview
     reviewNum = tempsoup.select('body > div > div > div.score_total > strong > em')[0].text
 IndexError: list index out of range
+Traceback (most recent call last):
+  File "save_list.py", line 88, in <module>
+    pyear = api.get_info(i[0], i[1])['prdtYear']
+  File "/home/hyewon/2018CRA/get_api.py", line 18, in get_info
+    response = urllib.request.urlopen(url)
+  File "/home/hyewon/anaconda3/lib/python3.6/urllib/request.py", line 223, in urlopen
+    return opener.open(url, data, timeout)
+  File "/home/hyewon/anaconda3/lib/python3.6/urllib/request.py", line 526, in open
+    response = self._open(req, data)
+  File "/home/hyewon/anaconda3/lib/python3.6/urllib/request.py", line 544, in _open
+    '_open', req)
+  File "/home/hyewon/anaconda3/lib/python3.6/urllib/request.py", line 504, in _call_chain
+    result = func(*args)
+  File "/home/hyewon/anaconda3/lib/python3.6/urllib/request.py", line 1346, in http_open
+    return self.do_open(http.client.HTTPConnection, req)
+  File "/home/hyewon/anaconda3/lib/python3.6/urllib/request.py", line 1318, in do_open
+    encode_chunked=req.has_header('Transfer-encoding'))
+  File "/home/hyewon/anaconda3/lib/python3.6/http/client.py", line 1239, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "/home/hyewon/anaconda3/lib/python3.6/http/client.py", line 1250, in _send_request
+    self.putrequest(method, url, **skips)
+  File "/home/hyewon/anaconda3/lib/python3.6/http/client.py", line 1117, in putrequest
+    self._output(request.encode('ascii'))
+UnicodeEncodeError: 'ascii' codec can't encode character '\uc774' in position 128: ordinal not in range(128)
