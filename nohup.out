@@ -88,3 +88,21 @@ Traceback (most recent call last):
   File "/home/hyewon/anaconda3/lib/python3.6/urllib/request.py", line 650, in http_error_default
     raise HTTPError(req.full_url, code, msg, hdrs, fp)
 urllib.error.HTTPError: HTTP Error 400: Bad request
+Traceback (most recent call last):
+  File "save_list.py", line 88, in <module>
+    pyear = api.get_info(i[0], i[1])['prdtYear']
+  File "/home/hyewon/2018CRA/get_api.py", line 18, in get_info
+    response = urllib.request.urlopen(url)
+  File "/home/hyewon/anaconda3/lib/python3.6/urllib/request.py", line 223, in urlopen
+    return opener.open(url, data, timeout)
+  File "/home/hyewon/anaconda3/lib/python3.6/urllib/request.py", line 532, in open
+    response = meth(req, response)
+  File "/home/hyewon/anaconda3/lib/python3.6/urllib/request.py", line 642, in http_response
+    'http', request, response, code, msg, hdrs)
+  File "/home/hyewon/anaconda3/lib/python3.6/urllib/request.py", line 570, in error
+    return self._call_chain(*args)
+  File "/home/hyewon/anaconda3/lib/python3.6/urllib/request.py", line 504, in _call_chain
+    result = func(*args)
+  File "/home/hyewon/anaconda3/lib/python3.6/urllib/request.py", line 650, in http_error_default
+    raise HTTPError(req.full_url, code, msg, hdrs, fp)
+urllib.error.HTTPError: HTTP Error 400: Bad request

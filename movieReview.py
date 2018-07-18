@@ -25,7 +25,7 @@ def crawlReview(Mname, Oyear, Pyear, maxPage=10, sort='sympathyScore') :
     import json
     content = json.loads(response.read())
 	
-    if content[total]==0 :
+    if content['total']==0 :
         result = [Mname, "리뷰를 가져오는데에 실패했습니다.", -1]
         return result
 

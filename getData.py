@@ -7,34 +7,29 @@ i'll return content (form : dict) using api
 
 import ListofMovie as lm
 import get_api as api
+import csv
 
 data = lm.get_movie_list()
 
-dataF = open("/home/hyewon/2018CRA/otherInfo.txt", 'w')
-num = 1
+dataF = open("/home/hyewon/2018CRA/otherInfo.csv", 'w', encoding='utf-8', newline='')
+f = csv.writer(dataF)
+
+f.writerow(['Movie Name', 'Movie Code', 'Open date', 'Movie Type', 'Nation', 'Genre', 'Directors', 'companys'])
+
 
 for i in data :
     cont = api.get_info(i[0], i[1])
-    info = "%d번째 영화이름 : " % num  + cont['movieNm'] + '\n'
-    info = info + "영화코드 : " + cont['movieCd'] + '\n' 
-    info = info + "개봉연월일 : " + cont['openDt'] + '\n' 
-    info = info + "영화 유형 : " + cont['typeNm'] + '\n' 
-    info = info + "대표 제작 국가 : " + cont['repNationNm'] + '\n' 
-    info = info + "대표 장르 : " + cont['repGenreNm'] + '\n' 
+    info = []
+    info.extend([cont['movieNm'], cont['movieCd'], cont['openDt'], cont['typeNm'], cont['repNationNm'], cont['repGenreNm']])
     if cont['directors'] : # 감독정보가 있으면
-        info = info + "감독 : " + cont['directors'][0]['peopleNm'] + '\n' 
+        info.append(cont['directors'][0]['peopleNm'])
     else :
-        info = info + "감독 : None\n"
+        info.append('NA')
     if cont['companys'] : #제작사가 있으면
-        info = info + "제작사 : "
-        for j in cont['companys'] :
-            info = info + j['companyCd'] + "/" + j['companyNm'] + "  "
-        info = info + '\n'
+        info.append(cont['companys'][0]['companyCd'] + "/" + cont['companys'][0]['companyNm'])
     else :
-        info = info + "제작사 : None.\n"
+        info.append('NA')
 
-    info = info + "\n\n\n"
-    dataF.write(info)
-    num = num+1
+    f.writerow(info)
 
 dataF.close()
