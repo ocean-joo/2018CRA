@@ -1,6 +1,4 @@
 # 2018CRA
-
-# summerProject_2018
 summer project in CRA
 
 
